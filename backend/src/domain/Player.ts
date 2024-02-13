@@ -1,5 +1,6 @@
 export default class Player {
   private constructor(
+    readonly id: number,
     readonly name: string,
     readonly level: number,
     readonly position: string
@@ -10,6 +11,6 @@ export default class Player {
     name: string,
     level: number,
     position: string): Player {
-    return new Player(name, level, position);
+    return new Player(0, name, level, position);
   }
 }
