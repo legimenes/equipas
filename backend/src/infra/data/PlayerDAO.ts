@@ -1,4 +1,4 @@
-import IPlayerDAO from "@application/data/IPlayerDAO";
+import IPlayerDAO from "@application/ports/driven/IPlayerDAO";
 import Player from "@domain/Player";
 import IDatabaseConnection from "./IDatabaseConnection";
 

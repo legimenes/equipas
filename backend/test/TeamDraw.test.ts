@@ -1,5 +1,5 @@
-import IPositionDAO from "@application/data/IPositionDAO";
-import ITeamDraw from "@application/usecase/ITeamDraw";
+import IPositionDAO from "@application/ports/driven/IPositionDAO";
+import ITeamDraw from "@application/ports/driver/ITeamDraw";
 import TeamDraw from "@application/usecase/TeamDraw";
 import Player from "@domain/Player";
 import Team from "@domain/Team";

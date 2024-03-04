@@ -1,4 +1,4 @@
-import IPositionDAO from "@application/data/IPositionDAO";
+import IPositionDAO from "@application/ports/driven/IPositionDAO";
 import Position from "@domain/Position";
 import IDatabaseConnection from "./IDatabaseConnection";
 

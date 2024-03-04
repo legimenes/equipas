@@ -1,7 +1,7 @@
 import Player from "@domain/Player";
 import Team from "@domain/Team";
-import ITeamDraw from "./ITeamDraw";
-import IPositionDAO from "@application/data/IPositionDAO";
+import ITeamDraw from "../ports/driver/ITeamDraw";
+import IPositionDAO from "@application/ports/driven/IPositionDAO";
 import Position from "@domain/Position";
 import '@domain/core/arrayExtensions';
 

@@ -1,5 +1,6 @@
 import CreatePlayer from "@application/usecase/CreatePlayer";
-import ICreatePlayer from "@application/usecase/ICreatePlayer";
+import ICreatePlayer from "@application/ports/driver/ICreatePlayer";
+import { CreatePlayerInput } from "@application/ports/driver/CreatePlayerInput";
 import Player from "@domain/Player"
 import PlayerDAO from "@infra/data/PlayerDAO";
 import Sqlite3Adapter from "@infra/data/Sqlite3Adapter";
@@ -16,10 +17,11 @@ beforeEach(async () => {
 })
 
 test('Should create a player', async () => {
-  let player: Player = Player.create('Neymar', 5, 'A');
-  await createPlayer.execute(player);
+  let input: CreatePlayerInput = { name: "Neymar", level: 5, position: "A" }
 
-  player = Player.create('Neuer', 5, 'G');
-  await createPlayer.execute(player);
+  await createPlayer.execute(input);
+
+  input = { name: "Neuer", level: 5, position: "G" }
+  await createPlayer.execute(input);
   //console.log(data);
 })

@@ -71,6 +71,11 @@ Run test:
 npm test
 ```
 
+Run dev:
+```
+npm run dev
+```
+
 ## References
 
 https://github.com/rodrigobranas/cccat13_4/tree/master/backend/ride

@@ -1,27 +1,29 @@
 import Player from "@domain/Player";
-import ICreatePlayer from "./ICreatePlayer";
-import IPlayerDAO from "@application/data/IPlayerDAO";
+import IPlayerDAO from "@application/ports/driven/IPlayerDAO";
+import { CreatePlayerInput } from "@application/ports/driver/CreatePlayerInput";
+import ICreatePlayer from "@application/ports/driver/ICreatePlayer";
 
 export default class CreatePlayer implements ICreatePlayer {
   constructor(readonly playerDAO: IPlayerDAO) {
   }
 
-  async execute(player: Player): Promise<boolean> {
-    this.validatePlayer(player);
+  async execute(input: CreatePlayerInput): Promise<boolean> {
+    this.validateInput(input);
 
+    const player: Player = Player.create(input.name, input.level, input.position);
     await this.playerDAO.insert(player);
 
     return true;
   }
 
-  private validatePlayer(player: Player): void {
-    if (player.name === null) {
+  private validateInput(input: CreatePlayerInput): void {
+    if (input.name === null) {
       throw new Error("Player name is required.");
     }
-    if (player.level == 0) {
+    if (input.level == 0) {
       throw new Error("Player level is required.");
     }
-    if (player.position === null) {
+    if (input.position === null) {
       throw new Error("Player position is required.");
     }
   }
