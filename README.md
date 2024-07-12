@@ -5,7 +5,7 @@
 ### Express and TypeScript
 ```
 npm init -y
-npm install express sqlite3
+npm install express sqlite3 pg-promise
 npm install -D typescript @types/express ts-node-dev tsconfig-paths @types/sqlite3
 ```
 

@@ -8,6 +8,7 @@
     "paths": {
       "@domain/*": ["src/domain/*"],
       "@application/*": ["src/application/*"],
+      "@features/*": ["src/application/features/*"],
       "@infra/*": ["src/infra/*"]
     },
     "typeRoots": [

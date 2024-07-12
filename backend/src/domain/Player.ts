@@ -13,4 +13,12 @@ export default class Player {
     position: string): Player {
     return new Player(0, name, level, position);
   }
+
+  static restore(
+    id: number,
+    name: string,
+    level: number,
+    position: string): Player {
+    return new Player(id, name, level, position);
+  }
 }

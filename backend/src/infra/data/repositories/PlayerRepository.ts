@@ -1,27 +1,11 @@
-import IPlayerDAO from "@application/ports/driven/IPlayerDAO";
+import IDatabaseConnection from "@infra/data/connection/IDatabaseConnection";
+import IPlayerRepository from "@domain/repositories/IPlayerRepository";
 import Player from "@domain/Player";
-import IDatabaseConnection from "./IDatabaseConnection";
 
-export default class PlayerDAO implements IPlayerDAO {
+export default class PlayerRepository implements IPlayerRepository {
   constructor(readonly connection: IDatabaseConnection) {
   }
-
-  async insert(player: Player): Promise<void> {
-    const statement = `
-      INSERT INTO Players
-      (Name, Level, Position)
-      VALUES (?, ?, ?)
-    `;
-    
-    const params: any[] = [
-      player.name,
-      player.level,
-      player.position
-    ]
-
-    await this.connection.execute(statement, params);
-  }
-
+  
   async update(player: Player): Promise<void> {
     const statement = `
       UPDATE Players SET
@@ -76,5 +60,21 @@ export default class PlayerDAO implements IPlayerDAO {
     this.connection.close();
 
     return player;
+  }
+
+  async insert(player: Player): Promise<void> {
+    const statement = `
+      INSERT INTO Players
+      (Name, Level, Position)
+      VALUES ($1, $2, $3)
+    `;
+    
+    const params: any[] = [
+      player.name,
+      player.level,
+      player.position
+    ]
+
+    const result = await this.connection.execute(statement, params);
   }
 }

@@ -1,14 +1,18 @@
 import express from "express";
+import PgPromiseAdapter from "@infra/data/connection/PgPromiseAdapter";
 
-const app = express();
-const port = 3000;
+import PlayerRepository from "@infra/data/repositories/PlayerRepository";
+import CreatePlayerUseCase from "@application/features/players/createPlayer/CreatePlayerUseCase";
+import CreatePlayerEndpoint from "@application/features/players/createPlayer/CreatePlayerEndpoint";
+import PlayerRouter from "@application/features/players/PlayerRouter";
 
-app.use(express.json());
+const databaseConnection = new PgPromiseAdapter();
+const playerRepository = new PlayerRepository(databaseConnection);
 
-const playerEndpoints = require("@infra/endpoints/PlayerEndpoints");
+const createPlayerUseCase = new CreatePlayerUseCase(playerRepository);
+const createPlayerEndpoint = new CreatePlayerEndpoint(createPlayerUseCase);
 
-app.use('/players', playerEndpoints);
+const router = express.Router();
+PlayerRouter.register(router, createPlayerEndpoint);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+export { router };

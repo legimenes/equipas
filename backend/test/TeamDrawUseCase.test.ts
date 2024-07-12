@@ -1,14 +1,12 @@
 import IPositionDAO from "@application/ports/driven/IPositionDAO";
-import ITeamDraw from "@application/ports/driver/ITeamDraw";
-import TeamDraw from "@application/usecase/TeamDraw";
+import ITeamDrawUseCase from "@application/features/teams/teamDraw/ITeamDrawUseCase";
+import TeamDrawUseCase from "@application/features/teams/teamDraw/TeamDrawUseCase";
 import Player from "@domain/Player";
 import Team from "@domain/Team";
+import PgPromiseAdapter from "@infra/data/connection/PgPromiseAdapter";
 import PositionDAO from "@infra/data/PositionDAO";
-import PositionDAO2 from "@infra/data/PositionDAO2";
-import PositionInMemoryDAO from "@infra/data/PositionInMemoryDAO";
-import Sqlite3Adapter from "@infra/data/Sqlite3Adapter";
 
-let teamDraw: ITeamDraw;
+let teamDraw: ITeamDrawUseCase;
 let thePositionDAO: IPositionDAO;
 
 beforeEach(() => {
@@ -17,10 +15,11 @@ beforeEach(() => {
 	// const logger = new LoggerConsole();
 	// signup = new Signup(accountRepository);
   //const positionDAO = new PositionInMemoryDAO();
-  const connection = new Sqlite3Adapter();
+  //const connection = new Sqlite3Adapter();
+  const connection = new PgPromiseAdapter();
   const positionDAO = new PositionDAO(connection);
   thePositionDAO = positionDAO
-	teamDraw = new TeamDraw(positionDAO);
+	teamDraw = new TeamDrawUseCase(positionDAO);
 })
 
 test.skip('Should draw three teams', async () => {

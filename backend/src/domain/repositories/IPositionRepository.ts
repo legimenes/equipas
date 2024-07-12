@@ -1,5 +1,5 @@
 import Position from "@domain/Position";
 
-export default interface IPositionDAO {
+export default interface IPositionRepository {
   get(): Promise<Position[]>;
 }

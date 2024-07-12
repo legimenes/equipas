@@ -1,8 +1,8 @@
-import IPositionDAO from "@application/ports/driven/IPositionDAO";
+import IDatabaseConnection from "@infra/data/connection/IDatabaseConnection";
+import IPositionRepository from "@domain/repositories/IPositionRepository";
 import Position from "@domain/Position";
-import IDatabaseConnection from "./IDatabaseConnection";
 
-export default class PositionDAO implements IPositionDAO {
+export default class PositionRepository implements IPositionRepository {
   constructor(readonly connection: IDatabaseConnection) {
   }
 
