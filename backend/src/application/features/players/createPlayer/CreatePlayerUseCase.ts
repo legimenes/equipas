@@ -1,7 +1,7 @@
 import Result from "@domain/core/Result";
-import Player from "@domain/Player";
 import IPlayerRepository from "@domain/repositories/IPlayerRepository";
-import { CreatePlayerRequest } from "./CreatePlayerRequest";
+import Player from "@domain/Player";
+import CreatePlayerRequest from "./CreatePlayerRequest";
 import ICreatePlayerUseCase from "./ICreatePlayerUseCase";
 
 export default class CreatePlayerUseCase implements ICreatePlayerUseCase {
@@ -14,8 +14,10 @@ export default class CreatePlayerUseCase implements ICreatePlayerUseCase {
       return Result.failure(validateRequestResult.getErrors());
 
     const player : Player = Player.create(request.name, request.level, request.position);
-    // TODO: descomentar
-    //await this.playerRepository.insert(player);
+    const insertedPlayer = await this.playerRepository.insert(player);
+    if (!insertedPlayer) {
+      return Result.failure(["There was a database failure"]);
+    }
 
     return Result.success(true);
   }

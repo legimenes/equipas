@@ -5,7 +5,31 @@ import Player from "@domain/Player";
 export default class PlayerRepository implements IPlayerRepository {
   constructor(readonly connection: IDatabaseConnection) {
   }
-  
+
+  async insert(player: Player): Promise<boolean> {
+    const statement = `
+      INSERT INTO Players (
+        Name,
+        Level,
+        Position
+      )
+      VALUES (
+        $1,
+        $2,
+        $3
+      )
+    `;
+    
+    const params: any[] = [
+      player.name,
+      player.level,
+      player.position
+    ]
+
+    const rowsAffected = await this.connection.execute(statement, params);
+    return (rowsAffected > 1);
+  }
+
   async update(player: Player): Promise<void> {
     const statement = `
       UPDATE Players SET
@@ -46,7 +70,7 @@ export default class PlayerRepository implements IPlayerRepository {
     return players;
   }
 
-  async getScalar(playerId: number): Promise<Player> {
+  async getById(playerId: number): Promise<Player> {
     const statement =
     `SELECT
       Id as id,
@@ -60,21 +84,5 @@ export default class PlayerRepository implements IPlayerRepository {
     this.connection.close();
 
     return player;
-  }
-
-  async insert(player: Player): Promise<void> {
-    const statement = `
-      INSERT INTO Players
-      (Name, Level, Position)
-      VALUES ($1, $2, $3)
-    `;
-    
-    const params: any[] = [
-      player.name,
-      player.level,
-      player.position
-    ]
-
-    const result = await this.connection.execute(statement, params);
   }
 }
