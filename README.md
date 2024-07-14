@@ -5,8 +5,8 @@
 ### Express and TypeScript
 ```
 npm init -y
-npm install express sqlite3 pg-promise
-npm install -D typescript @types/express ts-node-dev tsconfig-paths @types/sqlite3
+npm install express pg-promise
+npm install -D typescript @types/express ts-node-dev tsconfig-paths
 ```
 
 ### Configuring TypeScript
@@ -36,6 +36,16 @@ npm install -D eslint eslint-plugin-node @typescript-eslint/eslint-plugin @types
 Create config files:
 .eslintrc.js
 .eslintignore
+
+### Postgres
+```
+npm install pg-promise
+```
+
+### Zod
+```
+npm install zod
+```
 
 ### jest
 ```

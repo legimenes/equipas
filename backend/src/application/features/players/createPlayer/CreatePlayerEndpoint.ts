@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Result from '@domain/core/Result';
-import { CreatePlayerRequest } from './CreatePlayerRequest';
+import CreatePlayerRequest from './CreatePlayerRequest';
 import ICreatePlayerUseCase from "./ICreatePlayerUseCase";
 
 export default class CreatePlayerEndpoint {
