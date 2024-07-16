@@ -11,7 +11,7 @@ export default class CreatePlayerUseCase implements ICreatePlayerUseCase {
   async execute(request: CreatePlayerRequest): Promise<Result<boolean>> {
     const validateRequestResult = this.validateRequest(request);
     if (validateRequestResult.isFailure)
-      return Result.failure(validateRequestResult.getErrors());
+      return Result.failure(validateRequestResult.errors);
 
     const player : Player = Player.create(request.name, request.level, request.position);
     const insertedPlayer = await this.playerRepository.insert(player);

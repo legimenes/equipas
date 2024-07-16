@@ -90,7 +90,7 @@ npm run dev
 
 https://github.com/rodrigobranas/cccat13_4/tree/master/backend/ride
 https://github.com/diego3g/node-arch
-
+https://khalilstemmler.com/articles/enterprise-typescript-nodejs/handling-errors-result-class/
 
 ** As novas versões do typescript possuem um watch nativo. Basta configurar o watchOptions e rodar `tsc --watch`
  eslint: pre-commit
