@@ -1,9 +1,18 @@
+create table positions
+(
+	id smallserial not null,
+	name varchar(3) not null,
+	zone smallint not null,
+	maximumPlayers smallint,
+	constraint "pk_public.positions" PRIMARY KEY (id)
+);
+
 create table players
 (
 	id bigserial not null,
 	name varchar(100) not null,
 	level smallint not null,
-	position varchar(2),
+	position varchar(2), -- change to fk positions
 	constraint "pk_public.players" PRIMARY KEY (id)
 )
 

@@ -6,13 +6,23 @@ import CreatePlayerUseCase from "@application/features/players/createPlayer/Crea
 import CreatePlayerEndpoint from "@application/features/players/createPlayer/CreatePlayerEndpoint";
 import PlayerRouter from "@application/features/players/PlayerRouter";
 
-const databaseConnection = new PgPromiseAdapter();
-const playerRepository = new PlayerRepository(databaseConnection);
+import PositionRepository from "@infra/data/repositories/PositionRepository";
+import CreatePositionUseCase from "@application/features/positions/createPosition/CreatePositionUseCase";
+import CreatePositionEndpoint from "@application/features/positions/createPosition/CreatePositionEndpoint";
+import PositionRouter from "@application/features/positions/PositionRouter";
 
+const databaseConnection = new PgPromiseAdapter();
+
+const positionRepository = new PositionRepository(databaseConnection);
+const createPositionUseCase = new CreatePositionUseCase(positionRepository);
+const createPositionEndpoint = new CreatePositionEndpoint(createPositionUseCase);
+
+const playerRepository = new PlayerRepository(databaseConnection);
 const createPlayerUseCase = new CreatePlayerUseCase(playerRepository);
 const createPlayerEndpoint = new CreatePlayerEndpoint(createPlayerUseCase);
 
 const router = express.Router();
+PositionRouter.register(router, createPositionEndpoint);
 PlayerRouter.register(router, createPlayerEndpoint);
 
 export { router };

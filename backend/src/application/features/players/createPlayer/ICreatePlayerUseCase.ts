@@ -1,5 +1,5 @@
 import Result from "@domain/core/Result";
-import { CreatePlayerRequest } from "./CreatePlayerRequest";
+import CreatePlayerRequest from "./CreatePlayerRequest";
 
 
 export default interface ICreatePlayerUseCase {

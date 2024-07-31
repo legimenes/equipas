@@ -1,5 +1,6 @@
 import express from "express";
 import { router } from './app';
+import errorHandling from "@infra/middlewares/errorHandlingMiddleware";
 
 const server = express();
 const port = 3000;

@@ -26,8 +26,8 @@ export default class PlayerRepository implements IPlayerRepository {
       player.position
     ]
 
-    const rowsAffected = await this.connection.execute(statement, params);
-    return (rowsAffected > 1);
+    const affectedRows = await this.connection.execute(statement, params);
+    return (affectedRows > 1);
   }
 
   async update(player: Player): Promise<void> {

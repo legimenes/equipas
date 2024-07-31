@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import validation from "@infra/middlewares/validationMiddleware";
+import validation from "@infra/middlewares/routerParameterValidationMiddleware";
 import CreatePlayerSchema from "./createPlayer/CreatePlayerSchema";
 import CreatePlayerEndpoint from "./createPlayer/CreatePlayerEndpoint";
 
