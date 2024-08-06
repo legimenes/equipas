@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "93385942-aeae-470f-b748-de00ca79499c",
+		"name": "equipas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create position",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"D\",\r\n    \"zone\": 2,\r\n    \"maximumPlayers\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_localhost}}positions",
+					"host": [
+						"{{url_localhost}}positions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_localhost",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

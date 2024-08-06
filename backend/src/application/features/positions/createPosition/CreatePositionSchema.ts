@@ -8,7 +8,7 @@ const CreatePositionSchema = z.object({
   zone: z.number()
     .nullable().refine((arg) => arg !== null, { message: "Zone cannot be null" }),
   maximumPlayers: z.number()
-    .gt(0, { message: 'Maximum Players must be grater than 0' }).nullable().optional()
+    .gt(0, { message: 'Maximum Players must be greater than 0' }).nullable().optional()
 });
 
 export default CreatePositionSchema;

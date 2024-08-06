@@ -27,21 +27,28 @@ export default class PositionRepository implements IPositionRepository {
     ]
 
     const affectedRows = await this.connection.execute(statement, parameters);
-    return (affectedRows > 1);
+    this.connection.close();
+    
+    return (affectedRows > 0);
   }
 
-  async get(): Promise<Position[]> {
+  async getById(id: number): Promise<Position | undefined> {
     const statement = `
       SELECT
         name,
         zone,
         maximumPlayers
       FROM Positions
+      WHERE
+        id = $1
     `;
-      
-    const positions: Position[] = await this.connection.query(statement, undefined);
-    this.connection.close();
 
-    return positions;
+    const parameters: any[] = [
+      id
+    ]
+      
+    const position: Position = await this.connection.queryScalar(statement, parameters);
+
+    return position;
   }
 }

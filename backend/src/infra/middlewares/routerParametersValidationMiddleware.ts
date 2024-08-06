@@ -2,10 +2,23 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodError, ZodSchema } from 'zod';
 import Result from '@domain/core/Result';
 
-const validation = (schema: ZodSchema<any>) =>
+interface ValidationSchemas {
+  parametersSchema?: ZodSchema<any>;
+  bodySchema?: ZodSchema<any>;
+}
+
+const routerParametersValidation =
+    ( { parametersSchema, bodySchema }: ValidationSchemas ) =>
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      await schema.parse(request.body);
+      if (parametersSchema) {
+        await parametersSchema.parse(request.params);
+      }
+
+      if (bodySchema) {
+        await bodySchema.parse(request.body);
+      }
+
       next();
     } catch (error) {
       let errorMessages: string[] = [];
@@ -13,7 +26,7 @@ const validation = (schema: ZodSchema<any>) =>
         errorMessages = handleZodErrorMessages(error);
       }
       else {
-        errorMessages = ["Unknwon error"]
+        errorMessages = ["Unknown error"]
       }
 
       const failureResult = Result.failure(errorMessages);
@@ -30,4 +43,4 @@ function handleZodErrorMessages(error: ZodError): string[] {
   return errorMessages;
 }
 
-export default validation
+export default routerParametersValidation

@@ -4,13 +4,14 @@ import Position from "@domain/Position";
 import CreatePositionRequest from "./CreatePositionRequest";
 import ICreatePositionUseCase from "./ICreatePositionUseCase";
 
-export default class CreatePositionSchema implements ICreatePositionUseCase {
+export default class CreatePositionUseCase implements ICreatePositionUseCase {
   constructor(readonly positionRepository: IPositionRepository) {
   }
 
   async execute(request: CreatePositionRequest): Promise<Result<boolean>> {
     try {
       const position: Position = Position.create(request.name, request.zone, request.maximumPlayers);
+      
       const wasInserted: boolean = await this.positionRepository.insert(position);
       if (!wasInserted)
         return Result.failure(["There was a database failure"]);
