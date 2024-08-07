@@ -6,14 +6,35 @@ export default class PositionRepository implements IPositionRepository {
   constructor(readonly connection: IDatabaseConnection) {
   }
 
+  async getById(id: number): Promise<Position | undefined> {
+    const statement = `
+      select
+        id,
+        name,
+        zone,
+        maximumPlayers
+      from positions
+      where
+        id = $1
+    `;
+
+    const parameters: any[] = [
+      id
+    ]
+      
+    const position: Position = await this.connection.queryScalar(statement, parameters);
+
+    return position;
+  }
+
   async insert(position: Position): Promise<boolean> {
     const statement = `
-      INSERT INTO Positions (
+      insert into positions (
         name,
         zone,
         maximumPlayers
       )
-      VALUES (
+      values (
         $1,
         $2,
         $3
@@ -26,29 +47,28 @@ export default class PositionRepository implements IPositionRepository {
       position.maximumPositionPlayers
     ]
 
-    const affectedRows = await this.connection.execute(statement, parameters);
-    this.connection.close();
-    
+    const affectedRows = await this.connection.execute(statement, parameters);    
     return (affectedRows > 0);
   }
 
-  async getById(id: number): Promise<Position | undefined> {
+  async update(position: Position): Promise<boolean> {
     const statement = `
-      SELECT
-        name,
-        zone,
-        maximumPlayers
-      FROM Positions
-      WHERE
-        id = $1
+      update positions set
+        name = $1,
+        zone = $2,
+        maximumPlayers = $3
+      where
+        id = $4
     `;
 
     const parameters: any[] = [
-      id
+      position.name,
+      position.zone,
+      position.maximumPositionPlayers,
+      position.id
     ]
-      
-    const position: Position = await this.connection.queryScalar(statement, parameters);
 
-    return position;
+    const affectedRows = await this.connection.execute(statement, parameters);
+    return (affectedRows > 0);
   }
 }

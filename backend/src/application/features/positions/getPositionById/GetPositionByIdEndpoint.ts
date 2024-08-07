@@ -9,7 +9,7 @@ export default class GetPositionByIdEndpoint {
 
   async execute(request: Request, response: Response): Promise<void> {
     try {
-      const id = request.params.id;
+      const id: string = request.params.id;
 
       const result: Result<GetPositionByIdResponse> = await this.query.get(parseInt(id));
       

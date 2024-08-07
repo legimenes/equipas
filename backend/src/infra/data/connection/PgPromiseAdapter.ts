@@ -11,6 +11,7 @@ export default class PgPromiseAdapter implements IDatabaseConnection {
   query<T>(statement: string, parameters?: any[] | undefined): Promise<T[]> {
     throw new Error("Method not implemented.");
   }
+
   async queryScalar<T>(statement: string, parameters?: any[] | undefined): Promise<T> {
     try {
       const result = await this.connection.oneOrNone(statement, parameters);
@@ -19,6 +20,7 @@ export default class PgPromiseAdapter implements IDatabaseConnection {
       throw new Error('Error when executing the query.');
     }
   }
+
   async execute(statement: string, parameters?: any[] | undefined): Promise<number> {
     try {
       const result = await this.connection.result(statement, parameters);
@@ -27,10 +29,12 @@ export default class PgPromiseAdapter implements IDatabaseConnection {
       throw new Error('Error when executing the query.');
     }
   }
+
   close(): void {
     //this.connection.$pool.end();
     throw new Error("Method not implemented.");
   }
+
   open(): void {
     throw new Error("Method not implemented.");
   }

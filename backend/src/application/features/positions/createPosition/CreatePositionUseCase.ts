@@ -10,7 +10,10 @@ export default class CreatePositionUseCase implements ICreatePositionUseCase {
 
   async execute(request: CreatePositionRequest): Promise<Result<boolean>> {
     try {
-      const position: Position = Position.create(request.name, request.zone, request.maximumPlayers);
+      const position: Position = Position.create(
+        request.name,
+        request.zone,
+        request.maximumPlayers);
       
       const wasInserted: boolean = await this.positionRepository.insert(position);
       if (!wasInserted)

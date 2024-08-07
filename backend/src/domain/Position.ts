@@ -1,5 +1,6 @@
 export default class Position {
-  constructor(
+  private constructor(
+    readonly id: number,
     readonly name: string,
     readonly zone: number,
     readonly maximumPositionPlayers?: number
@@ -10,6 +11,14 @@ export default class Position {
     name: string,
     zone: number,
     maximumPositionPlayers?: number): Position {
-    return new Position(name, zone, maximumPositionPlayers);
+    return new Position(0, name, zone, maximumPositionPlayers);
+  }
+
+  static restore(
+    id: number,
+    name: string,
+    zone: number,
+    maximumPositionPlayers?: number): Position {
+    return new Position(id, name, zone, maximumPositionPlayers);
   }
 }
