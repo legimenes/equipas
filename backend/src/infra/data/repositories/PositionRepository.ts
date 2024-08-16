@@ -1,38 +1,20 @@
+import { inject, injectable } from "inversify";
+import { TYPES } from "@infra/di/types";
 import IDatabaseConnection from "@infra/data/connection/IDatabaseConnection";
 import IPositionRepository from "@domain/repositories/IPositionRepository";
 import Position from "@domain/Position";
 
+@injectable()
 export default class PositionRepository implements IPositionRepository {
-  constructor(readonly connection: IDatabaseConnection) {
+  constructor(@inject(TYPES.IDatabaseConnection) readonly connection: IDatabaseConnection) {
   }
-
-  async getById(id: number): Promise<Position | undefined> {
-    const statement = `
-      select
-        id,
-        name,
-        zone,
-        maximumPlayers
-      from positions
-      where
-        id = $1
-    `;
-
-    const parameters: any[] = [
-      id
-    ]
-      
-    const position: Position = await this.connection.queryScalar(statement, parameters);
-
-    return position;
-  }
-
+  
   async insert(position: Position): Promise<boolean> {
     const statement = `
-      insert into positions (
-        name,
-        zone,
-        maximumPlayers
+    insert into positions (
+      name,
+      zone,
+      maximumPlayers
       )
       values (
         $1,
@@ -70,5 +52,41 @@ export default class PositionRepository implements IPositionRepository {
 
     const affectedRows = await this.connection.execute(statement, parameters);
     return (affectedRows > 0);
+  }
+
+  async delete(id: number): Promise<boolean> {
+    const statement = `
+      delete from positions
+      where
+        id = $1
+    `;
+
+    const parameters: any[] = [
+      id
+    ]
+
+    const affectedRows = await this.connection.execute(statement, parameters);
+    return (affectedRows > 0);
+  }
+
+  async getById(id: number): Promise<Position | undefined> {
+    const statement = `
+      select
+        id,
+        name,
+        zone,
+        maximumPlayers
+      from positions
+      where
+        id = $1
+    `;
+
+    const parameters: any[] = [
+      id
+    ]
+      
+    const position: Position = await this.connection.queryScalar(statement, parameters);
+
+    return position;
   }
 }

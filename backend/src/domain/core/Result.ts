@@ -1,11 +1,11 @@
 export default class Result<T> {
   private _isSuccess: boolean;
-  private _data?: T | null;
-  private _errors: string[];
+  private _data?: T | undefined;
+  private _errors?: string[] | undefined;
 
-  constructor(isSuccess: boolean, data: T | null, errors: string[]) {
+  constructor(isSuccess: boolean, data: T | undefined, errors: string[] | undefined) {
     if (!isSuccess && errors === null) {
-        throw new Error('Invalid Operation');
+        throw new Error("Invalid Operation");
     }
 
     this._data = data;
@@ -15,7 +15,7 @@ export default class Result<T> {
     Object.freeze(this);
   }
 
-  get errors(): string[] {
+  get errors(): string[] | undefined {
     return this._errors;
   }
 
@@ -32,11 +32,11 @@ export default class Result<T> {
   }
 
   static failure<T>(errors: string[]): Result<T> {
-    return new Result<T>(false, null, errors);
+    return new Result<T>(false, undefined, errors);
   }
 
   static success<T>(data: T): Result<T> {
-    return new Result(true, data, []);
+    return new Result(true, data, undefined);
   }
 
   toJSON() {

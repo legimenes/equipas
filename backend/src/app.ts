@@ -1,36 +1,18 @@
 import express from "express";
-import PgPromiseAdapter from "@infra/data/connection/PgPromiseAdapter";
+import { container } from "@infra/di/container";
+import PositionRouter from "@application/modules/positions/PositionRouter";
+import CreatePositionEndpoint from "@application/modules/positions/createPosition/CreatePositionEndpoint";
+import UpdatePositionEndpoint from "@application/modules/positions/updatePosition/UpdatePositionEndpoint";
+import DeletePositionEndpoint from "@application/modules/positions/deletePosition/DeletePositionEndpoint";
+import GetPositionByIdEndpoint from "@application/modules/positions/getPositionById/GetPositionByIdEndpoint";
 
-import PlayerRepository from "@infra/data/repositories/PlayerRepository";
-import CreatePlayerUseCase from "@application/features/players/createPlayer/CreatePlayerUseCase";
-import CreatePlayerEndpoint from "@application/features/players/createPlayer/CreatePlayerEndpoint";
-import PlayerRouter from "@application/features/players/PlayerRouter";
-
-import PositionRepository from "@infra/data/repositories/PositionRepository";
-import GetPositionByIdQuery from "@application/features/positions/getPositionById/GetPositionByIdQuery";
-import GetPositionByIdEndpoint from "@application/features/positions/getPositionById/GetPositionByIdEndpoint";
-import CreatePositionUseCase from "@application/features/positions/createPosition/CreatePositionUseCase";
-import CreatePositionEndpoint from "@application/features/positions/createPosition/CreatePositionEndpoint";
-import UpdatePositionUseCase from "@application/features/positions/updatePosition/UpdatePositionUseCase";
-import UpdatePositionEndpoint from "@application/features/positions/updatePosition/UpdatePositionEndpoint";
-import PositionRouter from "@application/features/positions/PositionRouter";
-
-const databaseConnection = new PgPromiseAdapter();
-
-const positionRepository = new PositionRepository(databaseConnection);
-const getPositionByIdQuery = new GetPositionByIdQuery(positionRepository);
-const getPositionByIdEndpoint = new GetPositionByIdEndpoint(getPositionByIdQuery);
-const createPositionUseCase = new CreatePositionUseCase(positionRepository);
-const createPositionEndpoint = new CreatePositionEndpoint(createPositionUseCase);
-const updatePositionUseCase = new UpdatePositionUseCase(positionRepository);
-const updatePositionEndpoint = new UpdatePositionEndpoint(updatePositionUseCase);
-
-const playerRepository = new PlayerRepository(databaseConnection);
-const createPlayerUseCase = new CreatePlayerUseCase(playerRepository);
-const createPlayerEndpoint = new CreatePlayerEndpoint(createPlayerUseCase);
+const createPositionEndpoint = container.get(CreatePositionEndpoint);
+const updatePositionEndpoint = container.get(UpdatePositionEndpoint);
+const deletePositionEndpoint = container.get(DeletePositionEndpoint);
+const getPositionByIdEndpoint = container.get(GetPositionByIdEndpoint);
 
 const router = express.Router();
-PositionRouter.register(router, getPositionByIdEndpoint, createPositionEndpoint, updatePositionEndpoint);
-PlayerRouter.register(router, createPlayerEndpoint);
+//PlayerRouter.register(router, createPlayerEndpoint);
+PositionRouter.register(router, createPositionEndpoint, updatePositionEndpoint, deletePositionEndpoint, getPositionByIdEndpoint);
 
 export { router };

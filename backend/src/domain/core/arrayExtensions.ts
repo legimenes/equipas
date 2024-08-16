@@ -1,4 +1,4 @@
-import '../../globalAugmentations.d'
+import "../../globalAugmentations.d"
 
 Array.prototype.shuffle = function shuffle<T>(): void {
   // Fisher-Yates algorithm

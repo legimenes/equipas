@@ -5,7 +5,7 @@
 ### Express and TypeScript
 ```
 npm init -y
-npm install express pg-promise
+npm install express
 npm install -D typescript @types/express ts-node-dev tsconfig-paths
 ```
 
@@ -46,6 +46,9 @@ npm install pg-promise
 ```
 npm install zod
 ```
+
+### inversify
+npm install inversify reflect-metadata
 
 ### jest
 ```

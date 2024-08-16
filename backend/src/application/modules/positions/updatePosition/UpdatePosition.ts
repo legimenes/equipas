@@ -1,11 +1,14 @@
 import Result from "@domain/core/Result";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@infra/di/types";
 import IPositionRepository from "@domain/repositories/IPositionRepository";
 import Position from "@domain/Position";
 import UpdatePositionRequest from "./UpdatePositionRequest";
-import IUpdatePositionUseCase from "./IUpdatePositionUseCase";
+import IUpdatePosition from "./IUpdatePosition";
 
-export default class UpdatePositionUseCase implements IUpdatePositionUseCase {
-  constructor(readonly positionRepository: IPositionRepository) {
+@injectable()
+export default class UpdatePosition implements IUpdatePosition {
+  constructor(@inject(TYPES.IPositionRepository) readonly positionRepository: IPositionRepository) {
   }
 
   async execute(id: number, request: UpdatePositionRequest): Promise<Result<boolean>> {

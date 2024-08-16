@@ -1,11 +1,26 @@
+import { injectable } from "inversify";
 import IDatabaseConnection from "./IDatabaseConnection";
-import pgp from "pg-promise";
+//import pgp from "pg-promise";
+import pgPromise from 'pg-promise';
 
+const pgp = pgPromise();
+const connectionOptions = {
+  host: 'localhost',
+  port: 5444,
+  database: 'equipas',
+  user: 'postgres',
+  password: 'pass@word',
+  max: 10,
+  idleTimeoutMillis: 30000
+};
+
+@injectable()
 export default class PgPromiseAdapter implements IDatabaseConnection {
   private connection: any;
 
   constructor () {
-		this.connection = pgp()("postgres://postgres:pass@word@localhost:5444/equipas");
+		//this.connection = pgp()("postgres://postgres:pass@word@localhost:5444/equipas");
+    this.connection = pgp(connectionOptions);
 	}
 
   query<T>(statement: string, parameters?: any[] | undefined): Promise<T[]> {
@@ -32,7 +47,7 @@ export default class PgPromiseAdapter implements IDatabaseConnection {
 
   close(): void {
     //this.connection.$pool.end();
-    throw new Error("Method not implemented.");
+    //throw new Error("Method not implemented.");
   }
 
   open(): void {

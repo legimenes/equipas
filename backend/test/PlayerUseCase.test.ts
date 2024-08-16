@@ -1,6 +1,6 @@
-import { CreatePlayerRequest } from "@features/players/createPlayer/CreatePlayerRequest";
-import ICreatePlayerUseCase from "@features/players/createPlayer/ICreatePlayerUseCase";
-import CreatePlayerUseCase from "@features/players/createPlayer/CreatePlayerUseCase";
+import { CreatePlayerRequest } from "@application/modules/players/createPlayer/CreatePlayerRequest";
+import ICreatePlayerUseCase from "@application/modules/players/createPlayer/ICreatePlayerUseCase";
+import CreatePlayerUseCase from "@application/modules/players/createPlayer/CreatePlayerUseCase";
 import PgPromiseAdapter from "@infra/data/connection/PgPromiseAdapter";
 import PlayerRepository from "@infra/data/repositories/PlayerRepository";
 

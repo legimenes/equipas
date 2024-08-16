@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const UpdatePositionSchema = z.object({
+const CreatePositionRequestSchema = z.object({
   name: z.string()
     .min(1, { message: 'Name is required' })
     .max(3, { message: 'Name must have a maximum of 3 characters' })
@@ -11,4 +11,4 @@ const UpdatePositionSchema = z.object({
     .gt(0, { message: 'Maximum Players must be greater than 0' }).nullable().optional()
 });
 
-export default UpdatePositionSchema;
+export default CreatePositionRequestSchema;
