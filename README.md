@@ -37,11 +37,6 @@ Create config files:
 .eslintrc.js
 .eslintignore
 
-### Postgres
-```
-npm install pg-promise
-```
-
 ### Zod
 ```
 npm install zod
@@ -77,6 +72,10 @@ babel.config.json
 ```
 npm install uuidv4
 ```
+### Postgres
+```
+npm install pg-promise
+```
 
 ## Execute
 Run test:
@@ -98,6 +97,13 @@ https://khalilstemmler.com/articles/enterprise-typescript-nodejs/handling-errors
 ** As novas versões do typescript possuem um watch nativo. Basta configurar o watchOptions e rodar `tsc --watch`
  eslint: pre-commit
 
- ** testar no tsconfig: "rootDirs": ["./src", "./test"]
- "exclude":["./node_modules/*", "dist"] --colocar todos os arquivos de .eslintignore
+** testar no tsconfig: "rootDirs": ["./src", "./test"]
+"exclude":["./node_modules/*", "dist"] --colocar todos os arquivos de .eslintignore
  
+https://github.com/CodelyTV/typescript-ddd-example/blob/8d8fab0e0c399abe6397fa12c5772ea343034908/src/apps/backoffice/backend/controllers/CoursesGetController.ts
+https://github.com/CodelyTV/typescript-ddd-example/blob/master/src/Contexts/Backoffice/Courses/application/SearchByCriteria/SearchCoursesByCriteriaQuery.ts
+https://github.com/CodelyTV/typescript-ddd-example/blob/8d8fab0e0c399abe6397fa12c5772ea343034908/src/Contexts/Backoffice/Courses/application/SearchByCriteria/SearchCoursesByCriteriaQueryHandler.ts
+https://github.com/CodelyTV/typescript-ddd-example/blob/master/src/Contexts/Backoffice/Courses/application/SearchByCriteria/CoursesByCriteriaSearcher.ts
+https://github.com/CodelyTV/typescript-ddd-example/blob/master/src/Contexts/Backoffice/Courses/infrastructure/persistence/MongoBackofficeCourseRepository.ts
+https://github.com/CodelyTV/typescript-ddd-example/blob/master/src/Contexts/Backoffice/Courses/infrastructure/persistence/MongoCriteriaConverter.ts
+https://github.com/CodelyTV/typescript-ddd-example/blob/master/src/Contexts/Shared/infrastructure/persistence/mongo/MongoRepository.ts

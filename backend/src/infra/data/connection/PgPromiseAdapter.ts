@@ -23,12 +23,19 @@ export default class PgPromiseAdapter implements IDatabaseConnection {
     this.connection = pgp(connectionOptions);
 	}
 
-  query<T>(statement: string, parameters?: any[] | undefined): Promise<T[]> {
-    throw new Error("Method not implemented.");
+  async query<T>(statement: string, parameters?: any[] | undefined): Promise<T[]> {
+    try {
+      statement = statement.replace(/\s+/g, ' ').trim();
+      const result = await this.connection.any(statement, parameters);
+      return result;
+    } catch (error) {
+      throw new Error('Error when executing the query.');
+    }
   }
 
   async queryScalar<T>(statement: string, parameters?: any[] | undefined): Promise<T> {
     try {
+      statement = statement.replace(/\s+/g, ' ').trim();
       const result = await this.connection.oneOrNone(statement, parameters);
       return result;
     } catch (error) {
@@ -38,6 +45,7 @@ export default class PgPromiseAdapter implements IDatabaseConnection {
 
   async execute(statement: string, parameters?: any[] | undefined): Promise<number> {
     try {
+      statement = statement.replace(/\s+/g, ' ').trim();
       const result = await this.connection.result(statement, parameters);
       return result.rowCount;
     } catch (error) {

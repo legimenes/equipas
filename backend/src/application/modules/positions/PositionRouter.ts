@@ -7,15 +7,17 @@ import UpdatePositionRequestIdSchema from "./updatePosition/UpdatePositionReques
 import UpdatePositionEndpoint from "./updatePosition/UpdatePositionEndpoint";
 import DeletePositionRequestSchema from "./deletePosition/DeletePositionRequestSchema";
 import DeletePositionEndpoint from "./deletePosition/DeletePositionEndpoint";
-import GetPositionByIdRequestSchema from "./getPositionById/GetPositionByIdRequestSchema";
-import GetPositionByIdEndpoint from "./getPositionById/GetPositionByIdEndpoint";
+import GetPositionRequestSchema from "./getPosition/GetPositionRequestSchema";
+import GetPositionEndpoint from "./getPosition/GetPositionEndpoint";
+import SearchPositionsEndpoint from "./searchPositions/SearchPositionsEndpoint";
 
 export default class PositionRouter {
   static register(router: Router,
     createPositionEndpoint: CreatePositionEndpoint,
     updatePostionEndpoint: UpdatePositionEndpoint,
     deletePostionEndpoint: DeletePositionEndpoint,
-    getPositionByIdEndpoint: GetPositionByIdEndpoint
+    getPositionEndpoint: GetPositionEndpoint,
+    searchPositionsEndpoint: SearchPositionsEndpoint
   ): void {
     const positionRouter = express.Router();
 
@@ -25,19 +27,24 @@ export default class PositionRouter {
       (request, response) => createPositionEndpoint.execute(request, response));
 
     positionRouter.put(
-      '/:id',
+      '/:id(\\d+)',
       routerParametersValidation( { parametersSchema: UpdatePositionRequestIdSchema, bodySchema: UpdatePositionRequestSchema } ),
       (request, response) => updatePostionEndpoint.execute(request, response));
 
     positionRouter.delete(
-      '/:id',
+      '/:id(\\d+)',
       routerParametersValidation( { parametersSchema: DeletePositionRequestSchema } ),
       (request, response) => deletePostionEndpoint.execute(request, response));
 
     positionRouter.get(
-      '/:id',
-      routerParametersValidation( { parametersSchema: GetPositionByIdRequestSchema }),
-      (request, response) => getPositionByIdEndpoint.execute(request, response));
+      '/:id(\\d+)',
+      routerParametersValidation( { parametersSchema: GetPositionRequestSchema }),
+      (request, response) => getPositionEndpoint.execute(request, response));
+
+    positionRouter.get(
+      '/search',
+      //routerParametersValidation( { parametersSchema: GetPositionRequestSchema }),
+      (request, response) => searchPositionsEndpoint.execute(request, response));
 
     router.use('/positions', positionRouter);
   }
