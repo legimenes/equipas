@@ -8,6 +8,7 @@ import { CriteriaBuilder, CriteriaQuery } from "../CriteriaBuilder";
 
 @injectable()
 export default class PositionQuery implements IPositionQuery {
+
   constructor(
     @inject(TYPES.IDatabaseConnection) readonly connection: IDatabaseConnection,
     readonly criteriaBuilder: CriteriaBuilder) {
@@ -22,13 +23,11 @@ export default class PositionQuery implements IPositionQuery {
         maximumPlayers
       from positions
     `;
-
-    const criteriaQuery: CriteriaQuery = this.criteriaBuilder.buildQuery(criteria);
-
-    const statement: string = `${baseStatement} WHERE ${criteriaQuery.query}`
+    const criteriaQuery: CriteriaQuery = this.criteriaBuilder.buildQuery(criteria, baseStatement);
+    const statement: string = criteriaQuery.query;
     const parameters: any[] = criteriaQuery.parameters;
-
     const positions: SearchPositionsResponse[] = await this.connection.query(statement, parameters);
     return positions;
   }
+
 }

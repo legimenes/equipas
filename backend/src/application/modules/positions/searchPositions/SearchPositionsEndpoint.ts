@@ -22,7 +22,7 @@ export default class SearchPositionsEndpoint {
         queryParams.offset as string || undefined
       );
 
-      const result: Result<SearchPositionsResponse | undefined> = await this.query.get(criteriaRequest);
+      const result: Result<SearchPositionsResponse[]> = await this.query.get(criteriaRequest);
       if (result.isFailure) {
         response.status(422).json(result);
       }
