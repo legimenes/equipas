@@ -18,11 +18,11 @@ export default class Team {
   }
 
   checkPlayersPositionAvailability(position: Position): boolean {
-    if (position.maximumPositionPlayers === undefined) {
+    if (position.maximumPlayers === undefined) {
       return true;
     }
   
-    const maximumPositionPlayers = position.maximumPositionPlayers;
+    const maximumPositionPlayers = position.maximumPlayers;
     const playersNumberInPosition = this.getPlayersNumberInPosition(position.name);
     
     return maximumPositionPlayers > playersNumberInPosition;

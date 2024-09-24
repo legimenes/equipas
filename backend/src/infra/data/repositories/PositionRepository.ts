@@ -6,6 +6,7 @@ import Position from "@domain/Position";
 
 @injectable()
 export default class PositionRepository implements IPositionRepository {
+
   constructor(@inject(TYPES.IDatabaseConnection) readonly connection: IDatabaseConnection) {
   }
   
@@ -26,7 +27,7 @@ export default class PositionRepository implements IPositionRepository {
     const parameters: any[] = [
       position.name,
       position.zone,
-      position.maximumPositionPlayers
+      position.maximumPlayers
     ]
 
     const affectedRows = await this.connection.execute(statement, parameters);    
@@ -46,7 +47,7 @@ export default class PositionRepository implements IPositionRepository {
     const parameters: any[] = [
       position.name,
       position.zone,
-      position.maximumPositionPlayers,
+      position.maximumPlayers,
       position.id
     ]
 
@@ -80,13 +81,12 @@ export default class PositionRepository implements IPositionRepository {
       where
         id = $1
     `;
-
     const parameters: any[] = [
       id
-    ]
-      
-    const position: Position = await this.connection.queryScalar(statement, parameters);
-
+    ];
+    const record: any = await this.connection.queryScalar(statement, parameters);
+    const position: Position = Position.restore(record.id, record.name, record.zone, record.maximumplayers);
     return position;
   }
+
 }

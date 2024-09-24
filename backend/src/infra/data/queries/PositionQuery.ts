@@ -20,13 +20,19 @@ export default class PositionQuery implements IPositionQuery {
         id,
         name,
         zone,
-        maximumPlayers
-      from positions
+        maximumplayers
+      FROM positions
     `;
     const criteriaQuery: CriteriaQuery = this.criteriaBuilder.buildQuery(criteria, baseStatement);
     const statement: string = criteriaQuery.query;
     const parameters: any[] = criteriaQuery.parameters;
-    const positions: SearchPositionsResponse[] = await this.connection.query(statement, parameters);
+    const records: any[] = await this.connection.query(statement, parameters);
+    const positions: SearchPositionsResponse[] = records.map(record => ({
+      id: record.id,
+      zone: record.zone,
+      name: record.name,
+      maximumPlayers: record.maximumplayers
+    }));
     return positions;
   }
 

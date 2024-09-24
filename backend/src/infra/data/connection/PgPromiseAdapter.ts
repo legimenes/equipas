@@ -23,17 +23,17 @@ export default class PgPromiseAdapter implements IDatabaseConnection {
     this.connection = pgp(connectionOptions);
 	}
 
-  async query<T>(statement: string, parameters?: any[] | undefined): Promise<T[]> {
+  async query(statement: string, parameters?: any[] | undefined): Promise<any[]> {
     try {
       statement = statement.replace(/\s+/g, ' ').trim();
-      const result = await this.connection.any(statement, parameters);
+      const result: any[] = await this.connection.any(statement, parameters);
       return result;
     } catch (error) {
       throw new Error('Error when executing the query.');
     }
   }
 
-  async queryScalar<T>(statement: string, parameters?: any[] | undefined): Promise<T> {
+  async queryScalar(statement: string, parameters?: any[] | undefined): Promise<any> {
     try {
       statement = statement.replace(/\s+/g, ' ').trim();
       const result = await this.connection.oneOrNone(statement, parameters);
