@@ -16,12 +16,10 @@ class CriteriaBuilder {
     const parameters: any[] = this.assignParameters(criteria.filters.filters);
     const conditions: string = this.assingConditions(criteria.filters.filters);
     const order: string = this.assignOrder(criteria.order);
-    const hasFilters: boolean = (criteria.filters.filters.length > 0);
-    const hasPagination: boolean = (criteria.offset !== undefined && criteria.limit !== undefined && Number(criteria.offset) > 0 && Number(criteria.limit) > 0);
     let pagination: string = "";
-    if (hasPagination)
+    if (criteria.hasPagination())
       pagination = this.assignPagination(Number(criteria.offset), Number(criteria.limit));
-    let query: string = this.assignBaseQuery(baseQuery, hasFilters, hasPagination);
+    let query: string = this.assignBaseQuery(baseQuery, criteria.hasFilters(), criteria.hasPagination());
     query = `${query} ${conditions} ${order} ${pagination}`.replace(/\s+/g, " ").trim();
     const criteriaQuery: CriteriaQuery = {
       query: query,

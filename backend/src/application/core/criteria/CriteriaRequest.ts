@@ -15,6 +15,10 @@ class CriteriaRequest {
     readonly orderSequence?: string,
     readonly limit?: string,
     readonly offset?: string) {
+      if ((offset === undefined || Number(offset) == 0) && (limit !== undefined && Number(limit) > 0))
+        throw new Error("Invalid pagination parameters");
+      if ((limit === undefined || Number(limit) == 0) && (offset !== undefined && Number(offset) > 0))
+        throw new Error("Invalid pagination parameters");
   }
 
   public convertToCriteria(): Criteria {

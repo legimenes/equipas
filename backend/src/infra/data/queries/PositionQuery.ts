@@ -5,6 +5,7 @@ import IPositionQuery from "@application/contracts/queries/IPositionQuery";
 import SearchPositionsResponse from "@application/modules/positions/searchPositions/SearchPositionsResponse";
 import { Criteria } from "@domain/core/criteria/Criteria";
 import { CriteriaBuilder, CriteriaQuery } from "../CriteriaBuilder";
+import Pagination from "@application/core/pagination/Pagination";
 
 @injectable()
 export default class PositionQuery implements IPositionQuery {
@@ -14,7 +15,7 @@ export default class PositionQuery implements IPositionQuery {
     readonly criteriaBuilder: CriteriaBuilder) {
   }
 
-  async search(criteria: Criteria): Promise<SearchPositionsResponse[]> {
+  async search(criteria: Criteria): Promise<SearchPositionsResponse[] | PagedResponse<SearchPositionsResponse>> {
     const baseStatement = `
       select
         id,
@@ -33,6 +34,10 @@ export default class PositionQuery implements IPositionQuery {
       name: record.name,
       maximumPlayers: record.maximumplayers
     }));
+    if (criteria.hasFilters()) {
+      const pagedPositions = Pagination.get(Number(criteria.offset), Number(criteria.limit), positions);
+      return pagedPositions;
+    }
     return positions;
   }
 
